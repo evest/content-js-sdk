@@ -149,7 +149,7 @@ export type ComponentContainer = (
   props: ComponentContainerProps
 ) => JSX.Element;
 
-export function OptimizelyExperience({
+export function OptimizelyComposition({
   nodes,
   ComponentWrapper,
 }: {
