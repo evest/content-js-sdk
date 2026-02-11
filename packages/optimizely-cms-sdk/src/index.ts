@@ -13,7 +13,6 @@ export {
   GraphClient,
   GraphGetContentOptions,
   GraphGetLinksOptions,
-  GraphVariationInput,
 } from './graph/index.js';
 export type { PreviewParams } from './graph/index.js';
 export {

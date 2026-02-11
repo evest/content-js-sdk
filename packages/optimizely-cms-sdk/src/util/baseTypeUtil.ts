@@ -61,7 +61,7 @@ const COMMON_FRAGMENTS = [
   'fragment ItemMetadata on ItemMetadata { changeset displayOption }',
   'fragment InstanceMetadata on InstanceMetadata { changeset locales expired container owner routeSegment lastModifiedBy path createdBy }',
   CONTENT_URL_FRAGMENT,
-  'fragment IContentMetadata on IContentMetadata { key locale fallbackForLocale version displayName url {...ContentUrl} types published status created lastModified sortOrder variation ...MediaMetadata ...ItemMetadata ...InstanceMetadata }',
+  'fragment IContentMetadata on IContentMetadata { key locale fallbackForLocale version displayName url {...ContentUrl} types published status created lastModified sortOrder ...MediaMetadata ...ItemMetadata ...InstanceMetadata }',
   'fragment _IContent on _IContent { _id _metadata {...IContentMetadata} }',
 ];
 

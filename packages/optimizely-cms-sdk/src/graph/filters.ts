@@ -78,18 +78,6 @@ export function previewFilter(params: {
         locale: { eq: params.loc },
       },
     },
-    variation: {
-      include: 'ALL',
-    },
-  };
-}
-
-export function variationFilter(value: string): ContentInput {
-  return {
-    variation: {
-      include: 'SOME',
-      value: [value],
-    },
   };
 }
 
@@ -104,18 +92,8 @@ export function localeFilter(locale?: string[]): ContentInput {
  */
 export type ContentInput = {
   locale?: string[];
-  variation?: GraphVariationInput;
   where?: ContentWhereInput;
 };
-
-export type GraphVariationInput =
-  | { include: 'NONE' }
-  | { include: 'ALL' }
-  | {
-      include: 'SOME';
-      value: string[];
-      includeOriginal?: boolean;
-    };
 
 type ContentWhereInput = {
   _and?: ContentWhereInput[];

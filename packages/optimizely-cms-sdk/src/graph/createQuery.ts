@@ -326,14 +326,11 @@ export function createSingleContentQuery(
 
   return `
 ${fragment.join('\n')}
-query GetContent($where: _ContentWhereInput, $variation: VariationInput) {
-  _Content(where: $where, variation: $variation) {
+query GetContent($where: _ContentWhereInput) {
+  _Content(where: $where) {
     item {
       __typename
       ${fragmentName}
-      _metadata {
-        variation
-      }
     }
   }
 }
@@ -356,14 +353,11 @@ export function createMultipleContentQuery(
 
   return `
 ${fragment.join('\n')}
-query ListContent($where: _ContentWhereInput, $variation: VariationInput) {
-  _Content(where: $where, variation: $variation) {
+query ListContent($where: _ContentWhereInput) {
+  _Content(where: $where) {
     items {
 
       ${fragmentName}
-      _metadata {
-        variation
-      }
     }
   }
 }

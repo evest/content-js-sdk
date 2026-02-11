@@ -13,7 +13,6 @@ import {
   ContentInput as GraphVariables,
   pathFilter,
   previewFilter,
-  GraphVariationInput,
   localeFilter,
 } from './filters.js';
 
@@ -32,7 +31,6 @@ export type PreviewParams = {
 };
 
 export type GraphGetContentOptions = {
-  variation?: GraphVariationInput;
   host?: string;
 };
 
@@ -41,15 +39,12 @@ export type GraphGetLinksOptions = {
   locales?: string[];
 };
 
-export { GraphVariationInput };
-
 const GET_CONTENT_METADATA_QUERY = `
-query GetContentMetadata($where: _ContentWhereInput, $variation: VariationInput) {
-  _Content(where: $where, variation: $variation) {
+query GetContentMetadata($where: _ContentWhereInput) {
+  _Content(where: $where) {
     item {
       _metadata {
         types
-        variation
       }
     }
   }
@@ -336,11 +331,10 @@ export class GraphClient {
   /**
    * Fetches content from the CMS based on the provided path or options.
    *
-   * If a string is provided, it is treated as a content path. If an object is provided,
-   * it may include both a path and a variation to filter the content.
+   * If a string is provided, it is treated as a content path.
    *
    * @param path - A string representing the content path
-   * @param options - Options to include or exclude variations
+   * @param options - Options for filtering content
    *
    * @param contentType - A string representing the content type. If omitted, the method
    *   will try to get the content type name from the CMS.
@@ -353,7 +347,6 @@ export class GraphClient {
   ) {
     const input: GraphVariables = {
       ...pathFilter(path, options?.host),
-      variation: options?.variation,
     };
     const { contentTypeName, damEnabled } = await this.getContentMetaData(
       input
