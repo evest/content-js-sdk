@@ -245,7 +245,7 @@ export class GraphClient {
     }).catch((err) => {
       if (err instanceof TypeError) {
         const optiErr = new OptimizelyGraphError(
-          'Error when calling `fetch`. Ensure the Graph URL is correct or try again later.'
+          'Error when calling `fetch`. Ensure the Graph URL is correct or try again later.',
         );
         optiErr.cause = err;
         throw optiErr;
@@ -284,7 +284,6 @@ export class GraphClient {
     }
 
     const json = (await response.json()) as any;
-
     return json.data;
   }
 
@@ -297,12 +296,12 @@ export class GraphClient {
    */
   private async getContentMetaData(
     input: GraphVariables,
-    previewToken?: string
+    previewToken?: string,
   ) {
     const data = await this.request(
       GET_CONTENT_METADATA_QUERY,
       input,
-      previewToken
+      previewToken,
     );
 
     const contentTypeName = data._Content?.item?._metadata?.types?.[0];
@@ -321,7 +320,7 @@ export class GraphClient {
             query: GET_CONTENT_METADATA_QUERY,
             variables: input,
           },
-        }
+        },
       );
     }
 
@@ -343,14 +342,13 @@ export class GraphClient {
    */
   async getContentByPath<T = any>(
     path: string,
-    options?: GraphGetContentOptions
+    options?: GraphGetContentOptions,
   ) {
     const input: GraphVariables = {
       ...pathFilter(path, options?.host),
     };
-    const { contentTypeName, damEnabled } = await this.getContentMetaData(
-      input
-    );
+    const { contentTypeName, damEnabled } =
+      await this.getContentMetaData(input);
 
     if (!contentTypeName) {
       return [];
@@ -395,7 +393,7 @@ export class GraphClient {
               ...localeFilter(options?.locales),
             },
           },
-        }
+        },
       );
     }
 
@@ -433,13 +431,13 @@ export class GraphClient {
     const input = previewFilter(params);
     const { contentTypeName, damEnabled } = await this.getContentMetaData(
       input,
-      params.preview_token
+      params.preview_token,
     );
 
     if (!contentTypeName) {
       throw new GraphResponseError(
         `No content found for key [${params.key}]. Check that your CMS contains something there`,
-        { request: { variables: input, query: GET_CONTENT_METADATA_QUERY } }
+        { request: { variables: input, query: GET_CONTENT_METADATA_QUERY } },
       );
     }
     const query = createSingleContentQuery(contentTypeName, damEnabled);
@@ -447,7 +445,7 @@ export class GraphClient {
 
     return decorateWithContext(
       removeTypePrefix(response?._Content?.item),
-      params
+      params,
     );
   }
 }
